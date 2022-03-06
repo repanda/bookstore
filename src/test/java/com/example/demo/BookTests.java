@@ -3,10 +3,9 @@ package com.example.demo;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /*
 Cutting requirements
@@ -29,20 +28,16 @@ books + borrowedBooks => books
  */
 public class BookTests {
 
+    final Book javaBook = new Book(new BookId());
+    final Book goBook = new Book(new BookId());
+    final Book cssBook = new Book(new BookId());
+
+    final BookRepository bookRepository = new FakeBookRepository();
+    final BorrowedBookRepository borrowedBookRepository = new FakeBorrowedBookRepository();
+
     @Test
-    public void availableBooks() {
-
-        List<Book> books = new ArrayList<>();
-        Book javaBook = new Book(new BookId());
-        books.add(javaBook);
-        Book goBook = new Book(new BookId());
-        books.add(goBook);
-        books.add(new Book(new BookId()));
-
-        BookRepository bookRepository = new FakeBookRepository();
-        bookRepository.addAll(books);
-
-        BorrowedBookRepository borrowedBookRepository =  new FakeBorrowedBookRepository();
+    public void returnOnlyAvailableBooks() {
+        bookRepository.addAll(List.of(javaBook, goBook, cssBook));
 
         List<BorrowedBook> borrowedBooks = List.of(new BorrowedBook(javaBook.getBookId()), new BorrowedBook(goBook.getBookId()));
         borrowedBookRepository.addAll(borrowedBooks);
@@ -56,12 +51,7 @@ public class BookTests {
     @Test
     public void returnAllBooksWhenNoBooksIsBorrowed() {
 
-        List<Book> books = new ArrayList<>();
-        books.add(new Book(new BookId()));
-        books.add(new Book(new BookId()));
-
-        BookRepository bookRepository = new FakeBookRepository();
-        bookRepository.addAll(books);
+        bookRepository.addAll(List.of(javaBook, goBook));
 
         Catalog catalog = new Catalog(bookRepository, new FakeBorrowedBookRepository());
 
