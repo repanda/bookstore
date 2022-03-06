@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.*;
 
 /*
 Cutting requirements
@@ -31,23 +34,22 @@ public class BookTests {
     @Test
     public void availableBooks() {
 
-        Assertions.assertThat(true).isTrue();
+        assertThat(true).isTrue();
     }
 
     @Test
     public void returnAllBooksWhenNoBooksIsBorrowed() {
 
         List<Book> books = new ArrayList<>();
-        books.add(new Book());
-        books.add(new Book());
+        books.add(new Book(new BookId()));
+        books.add(new Book(new BookId()));
 
         BookRepository bookRepository = new FakeBookRepository();
         bookRepository.addAll(books);
 
         Catalog catalog = new Catalog(bookRepository);
 
-        Assertions
-                .assertThat(catalog.getAvailableBooks())
+        assertThat(catalog.getAvailableBooks())
                 .hasSize(2);
     }
 
