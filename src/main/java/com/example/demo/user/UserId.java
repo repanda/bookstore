@@ -1,8 +1,8 @@
-package com.example.demo;
+package com.example.demo.user;
 
 import java.util.UUID;
 
-class UserId {
+public class UserId {
 
     UUID userId;
 

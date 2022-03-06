@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.borrowing;
 
 import java.util.List;
 

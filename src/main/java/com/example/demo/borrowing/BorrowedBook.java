@@ -1,6 +1,9 @@
-package com.example.demo;
+package com.example.demo.borrowing;
 
-class BorrowedBook {
+import com.example.demo.catalog.BookId;
+import com.example.demo.user.UserId;
+
+public class BorrowedBook {
 
     private BookId bookId;
 

@@ -1,6 +1,6 @@
-package com.example.demo;
+package com.example.demo.user;
 
-class User {
+public class User {
 
     private UserId userId;
 

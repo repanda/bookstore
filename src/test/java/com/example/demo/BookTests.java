@@ -1,6 +1,19 @@
 package com.example.demo;
 
 
+import com.example.demo.application.FakeBookRepository;
+import com.example.demo.application.FakeBorrowedBookRepository;
+import com.example.demo.application.FakeUserRepository;
+import com.example.demo.borrowing.BorrowedBook;
+import com.example.demo.borrowing.BorrowedBookRepository;
+import com.example.demo.catalog.Book;
+import com.example.demo.catalog.BookId;
+import com.example.demo.catalog.BookRepository;
+import com.example.demo.catalog.Catalog;
+import com.example.demo.user.User;
+import com.example.demo.user.UserId;
+import com.example.demo.user.UserRepository;
+import com.example.demo.user.Users;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

@@ -1,6 +1,6 @@
-package com.example.demo;
+package com.example.demo.catalog;
 
-class Book {
+public class Book {
 
     private BookId bookId;
 

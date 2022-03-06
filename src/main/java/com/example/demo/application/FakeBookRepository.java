@@ -1,9 +1,12 @@
-package com.example.demo;
+package com.example.demo.application;
+
+import com.example.demo.catalog.Book;
+import com.example.demo.catalog.BookRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class FakeBookRepository implements BookRepository {
+public class FakeBookRepository implements BookRepository {
 
     List<Book> repository = new ArrayList<>();
 

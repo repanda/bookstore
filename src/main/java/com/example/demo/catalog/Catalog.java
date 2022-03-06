@@ -1,9 +1,12 @@
-package com.example.demo;
+package com.example.demo.catalog;
+
+import com.example.demo.borrowing.BorrowedBook;
+import com.example.demo.borrowing.BorrowedBookRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-class Catalog {
+public class Catalog {
 
     private final BookRepository bookRepository;
     private final BorrowedBookRepository borrowedBookRepository;

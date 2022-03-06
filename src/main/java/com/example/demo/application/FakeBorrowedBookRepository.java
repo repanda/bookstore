@@ -1,9 +1,12 @@
-package com.example.demo;
+package com.example.demo.application;
+
+import com.example.demo.borrowing.BorrowedBook;
+import com.example.demo.borrowing.BorrowedBookRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class FakeBorrowedBookRepository implements BorrowedBookRepository {
+public class FakeBorrowedBookRepository implements BorrowedBookRepository {
 
     List<BorrowedBook> repository = new ArrayList<>();
 

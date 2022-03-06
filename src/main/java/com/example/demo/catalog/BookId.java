@@ -1,8 +1,8 @@
-package com.example.demo;
+package com.example.demo.catalog;
 
 import java.util.UUID;
 
-class BookId {
+public class BookId {
 
     UUID bookId;
 
