@@ -1,11 +1,23 @@
 package com.example.demo.user;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
-public class User {
+public class User implements Serializable {
 
     private UserId userId;
     private Date memberTill;
+
+    private String name;
+    private String firstName;
+
+    public User(String name, String firstName, Date memberTill) {
+        this.name = name;
+        this.firstName = firstName;
+        this.memberTill = memberTill;
+        this.userId = new UserId(UUID.randomUUID());
+    }
 
     public User(UserId userId) {
         this.userId = userId;
@@ -30,5 +42,13 @@ public class User {
      */
     public boolean activeUser() {
         return memberTill == null;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getFirstName() {
+        return firstName;
     }
 }

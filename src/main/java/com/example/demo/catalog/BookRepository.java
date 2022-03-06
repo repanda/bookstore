@@ -6,4 +6,6 @@ public interface BookRepository {
     List<Book> getAll();
 
     void addAll(List<Book> books);
+
+    Book findByTitle(String bookName);
 }

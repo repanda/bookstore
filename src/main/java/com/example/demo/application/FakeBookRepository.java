@@ -19,4 +19,9 @@ public class FakeBookRepository implements BookRepository {
     public void addAll(List<Book> books) {
         repository.addAll(books);
     }
+
+    @Override
+    public Book findByTitle(String bookName) {
+        return null;
+    }
 }

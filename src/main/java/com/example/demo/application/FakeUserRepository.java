@@ -28,4 +28,9 @@ public class FakeUserRepository implements UserRepository {
     public List<User> getAll() {
         return repository;
     }
+
+    @Override
+    public User findByName(String userName, String borrowerFistName) {
+        return null;
+    }
 }

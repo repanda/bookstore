@@ -2,10 +2,12 @@ package com.example.demo.user;
 
 import com.example.demo.borrowing.BorrowedBook;
 import com.example.demo.borrowing.BorrowedBookRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class Users {
 
     private final UserRepository userRepository;
