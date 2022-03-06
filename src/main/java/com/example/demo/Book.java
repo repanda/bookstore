@@ -12,7 +12,4 @@ class Book {
         return bookId;
     }
 
-    public void setBookId(BookId bookId) {
-        this.bookId = bookId;
-    }
 }

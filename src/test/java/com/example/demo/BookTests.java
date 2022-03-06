@@ -4,13 +4,14 @@ package com.example.demo;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /*
 Cutting requirements
 
-a) returns all users who have actually borrowed at least one book
+a) returns all users who have actually borrowed at least one book (actually!)
  in (borrowedBooks)   => function:: ( checkBorrowedBooks ) => out ( Users )
 
 b) returns all non-terminated users who have not currently borrowed anything
@@ -28,9 +29,11 @@ books + borrowedBooks => books
  */
 public class BookTests {
 
-    final Book javaBook = new Book(new BookId());
-    final Book goBook = new Book(new BookId());
-    final Book cssBook = new Book(new BookId());
+    final Book javaBook = new Book(new BookId(UUID.randomUUID()));
+    final Book goBook = new Book(new BookId(UUID.randomUUID()));
+    final Book cssBook = new Book(new BookId(UUID.randomUUID()));
+
+    User FAKE_USER = new User(new UserId(UUID.randomUUID()));
 
     final BookRepository bookRepository = new FakeBookRepository();
     final BorrowedBookRepository borrowedBookRepository = new FakeBorrowedBookRepository();
@@ -39,7 +42,7 @@ public class BookTests {
     public void returnOnlyAvailableBooks() {
         bookRepository.addAll(List.of(javaBook, goBook, cssBook));
 
-        List<BorrowedBook> borrowedBooks = List.of(new BorrowedBook(javaBook.getBookId()), new BorrowedBook(goBook.getBookId()));
+        List<BorrowedBook> borrowedBooks = List.of(new BorrowedBook(javaBook.getBookId(), FAKE_USER.getUserId()), new BorrowedBook(goBook.getBookId(), FAKE_USER.getUserId()));
         borrowedBookRepository.addAll(borrowedBooks);
 
         Catalog catalog = new Catalog(bookRepository, borrowedBookRepository);
@@ -59,5 +62,25 @@ public class BookTests {
                 .hasSize(2);
     }
 
+    @Test
+    public void returnAllUsersWhoHaveActuallyBorrowedAtLeastOneBook() {
+        User chish = new User(new UserId(UUID.randomUUID()));
+        User odum = new User(new UserId(UUID.randomUUID()));
+
+        final Book javaBook = new Book(new BookId(UUID.randomUUID()));
+        final Book goBook = new Book(new BookId(UUID.randomUUID()));
+
+        UserRepository userRepository = new FakeUserRepository();
+        userRepository.addAll(List.of(chish, odum));
+
+
+        List<BorrowedBook> borrowedBooks = List.of(new BorrowedBook(javaBook.getBookId(), chish.getUserId()), new BorrowedBook(goBook.getBookId(), chish.getUserId()));
+        borrowedBookRepository.addAll(borrowedBooks);
+
+        Users users = new Users(userRepository, borrowedBookRepository);
+
+        assertThat(users.borrowedAtLeastOneBook())
+                .hasSize(1);
+    }
 
 }

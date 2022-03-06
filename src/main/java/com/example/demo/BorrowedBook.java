@@ -4,15 +4,19 @@ class BorrowedBook {
 
     private BookId bookId;
 
-    public BorrowedBook(BookId bookId) {
+    private UserId borrowerId;
+
+    public BorrowedBook(BookId bookId, UserId borrowerId) {
         this.bookId = bookId;
+        this.borrowerId = borrowerId;
     }
 
     public BookId getBookId() {
         return bookId;
     }
 
-    public void setBookId(BookId bookId) {
-        this.bookId = bookId;
+    public UserId getBorrowerId() {
+        return borrowerId;
     }
+
 }
