@@ -51,6 +51,7 @@ public class BookTests {
 
     final BookRepository bookRepository = new FakeBookRepository();
     final BorrowedBookRepository borrowedBookRepository = new FakeBorrowedBookRepository();
+    final UserRepository userRepository = new FakeUserRepository();
 
     @Test
     public void returnOnlyAvailableBooks() {
@@ -81,12 +82,7 @@ public class BookTests {
         User chish = new User(new UserId(UUID.randomUUID()));
         User odum = new User(new UserId(UUID.randomUUID()));
 
-        final Book javaBook = new Book(new BookId(UUID.randomUUID()));
-        final Book goBook = new Book(new BookId(UUID.randomUUID()));
-
-        UserRepository userRepository = new FakeUserRepository();
         userRepository.addAll(List.of(chish, odum));
-
 
         List<BorrowedBook> borrowedBooks = List.of(new BorrowedBook(javaBook.getBookId(), chish.getUserId()), new BorrowedBook(goBook.getBookId(), chish.getUserId()));
         borrowedBookRepository.addAll(borrowedBooks);
@@ -98,18 +94,13 @@ public class BookTests {
     }
 
     @Test
-    public void  returnsAllNonTerminatedUsersWhoHaveNotCurrentlyBorrowedAnything() {
+    public void returnsAllNonTerminatedUsersWhoHaveNotCurrentlyBorrowedAnything() {
         User borrowerUser = new User(new UserId(UUID.randomUUID()));
         User activeUser = new User(new UserId(UUID.randomUUID()));
         User terminatedUser = new User(new UserId(UUID.randomUUID()), new Date());
         User anotherTerminatedUser = new User(new UserId(UUID.randomUUID()), new Date());
 
-        final Book javaBook = new Book(new BookId(UUID.randomUUID()));
-        final Book goBook = new Book(new BookId(UUID.randomUUID()));
-
-        UserRepository userRepository = new FakeUserRepository();
         userRepository.addAll(List.of(borrowerUser, activeUser, terminatedUser, anotherTerminatedUser));
-
 
         List<BorrowedBook> borrowedBooks = List.of(new BorrowedBook(javaBook.getBookId(), borrowerUser.getUserId()), new BorrowedBook(goBook.getBookId(), terminatedUser.getUserId()));
         borrowedBookRepository.addAll(borrowedBooks);

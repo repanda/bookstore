@@ -17,30 +17,27 @@ public class Users {
     }
 
     public List<User> borrowedAtLeastOneBook() {
+        List<UserId> borrowersIds = getBorrowersIds();
 
-        List<User> users = userRepository.getAll();
-
-        List<UserId> borrowsIds = borrowedBookRepository.getAll()
-                .stream().map(BorrowedBook::getBorrowerId)
-                .collect(Collectors.toList());
-
-
-        return users.stream()
-                .filter(user -> borrowsIds.contains(user.getUserId()))
+        return userRepository.getAll()
+                .stream()
+                .filter(user -> borrowersIds.contains(user.getUserId()))
                 .collect(Collectors.toList());
     }
 
     public List<User> nonTerminatedUser() {
+        List<UserId> borrowersIds = getBorrowersIds();
 
-        List<User> users = userRepository.getAll();
-
-        List<UserId> borrowsIds = borrowedBookRepository.getAll()
-                .stream().map(BorrowedBook::getBorrowerId)
-                .collect(Collectors.toList());
-
-        return users.stream()
+        return userRepository.getAll()
+                .stream()
                 .filter(User::activeUser)
-                .filter(user -> !borrowsIds.contains(user.getUserId()))
+                .filter(user -> !borrowersIds.contains(user.getUserId()))
+                .collect(Collectors.toList());
+    }
+
+    private List<UserId> getBorrowersIds() {
+        return borrowedBookRepository.getAll()
+                .stream().map(BorrowedBook::getBorrowerId)
                 .collect(Collectors.toList());
     }
 }
