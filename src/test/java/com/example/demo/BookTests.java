@@ -1,12 +1,10 @@
 package com.example.demo;
 
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -34,7 +32,25 @@ public class BookTests {
     @Test
     public void availableBooks() {
 
-        assertThat(true).isTrue();
+        List<Book> books = new ArrayList<>();
+        Book javaBook = new Book(new BookId());
+        books.add(javaBook);
+        Book goBook = new Book(new BookId());
+        books.add(goBook);
+        books.add(new Book(new BookId()));
+
+        BookRepository bookRepository = new FakeBookRepository();
+        bookRepository.addAll(books);
+
+        BorrowedBookRepository borrowedBookRepository =  new FakeBorrowedBookRepository();
+
+        List<BorrowedBook> borrowedBooks = List.of(new BorrowedBook(javaBook.getBookId()), new BorrowedBook(goBook.getBookId()));
+        borrowedBookRepository.addAll(borrowedBooks);
+
+        Catalog catalog = new Catalog(bookRepository, borrowedBookRepository);
+
+        assertThat(catalog.getAvailableBooks())
+                .hasSize(1);
     }
 
     @Test
@@ -47,7 +63,7 @@ public class BookTests {
         BookRepository bookRepository = new FakeBookRepository();
         bookRepository.addAll(books);
 
-        Catalog catalog = new Catalog(bookRepository);
+        Catalog catalog = new Catalog(bookRepository, new FakeBorrowedBookRepository());
 
         assertThat(catalog.getAvailableBooks())
                 .hasSize(2);

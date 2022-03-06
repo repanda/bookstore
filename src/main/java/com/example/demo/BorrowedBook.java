@@ -1,10 +1,10 @@
 package com.example.demo;
 
-class Book {
+class BorrowedBook {
 
     private BookId bookId;
 
-    public Book(BookId bookId) {
+    public BorrowedBook(BookId bookId) {
         this.bookId = bookId;
     }
 
