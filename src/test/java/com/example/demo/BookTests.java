@@ -16,6 +16,7 @@ import com.example.demo.user.UserRepository;
 import com.example.demo.user.Users;
 import org.junit.jupiter.api.Test;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -93,6 +94,29 @@ public class BookTests {
         Users users = new Users(userRepository, borrowedBookRepository);
 
         assertThat(users.borrowedAtLeastOneBook())
+                .hasSize(1);
+    }
+
+    @Test
+    public void  returnsAllNonTerminatedUsersWhoHaveNotCurrentlyBorrowedAnything() {
+        User borrowerUser = new User(new UserId(UUID.randomUUID()));
+        User activeUser = new User(new UserId(UUID.randomUUID()));
+        User terminatedUser = new User(new UserId(UUID.randomUUID()), new Date());
+        User anotherTerminatedUser = new User(new UserId(UUID.randomUUID()), new Date());
+
+        final Book javaBook = new Book(new BookId(UUID.randomUUID()));
+        final Book goBook = new Book(new BookId(UUID.randomUUID()));
+
+        UserRepository userRepository = new FakeUserRepository();
+        userRepository.addAll(List.of(borrowerUser, activeUser, terminatedUser, anotherTerminatedUser));
+
+
+        List<BorrowedBook> borrowedBooks = List.of(new BorrowedBook(javaBook.getBookId(), borrowerUser.getUserId()), new BorrowedBook(goBook.getBookId(), terminatedUser.getUserId()));
+        borrowedBookRepository.addAll(borrowedBooks);
+
+        Users users = new Users(userRepository, borrowedBookRepository);
+
+        assertThat(users.nonTerminatedUser())
                 .hasSize(1);
     }
 

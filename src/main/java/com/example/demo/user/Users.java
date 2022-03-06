@@ -29,4 +29,18 @@ public class Users {
                 .filter(user -> borrowsIds.contains(user.getUserId()))
                 .collect(Collectors.toList());
     }
+
+    public List<User> nonTerminatedUser() {
+
+        List<User> users = userRepository.getAll();
+
+        List<UserId> borrowsIds = borrowedBookRepository.getAll()
+                .stream().map(BorrowedBook::getBorrowerId)
+                .collect(Collectors.toList());
+
+        return users.stream()
+                .filter(User::activeUser)
+                .filter(user -> !borrowsIds.contains(user.getUserId()))
+                .collect(Collectors.toList());
+    }
 }
