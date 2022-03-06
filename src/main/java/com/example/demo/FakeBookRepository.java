@@ -5,13 +5,15 @@ import java.util.List;
 
 class FakeBookRepository implements BookRepository {
 
+    List<Book> repository = new ArrayList<>();
+
     @Override
     public List<Book> getAll() {
-        List<Book> books = new ArrayList<>();
+        return repository;
+    }
 
-        books.add(new Book());
-        books.add(new Book());
-
-        return books;
+    @Override
+    public void addAll(List<Book> books) {
+        repository.addAll(books);
     }
 }

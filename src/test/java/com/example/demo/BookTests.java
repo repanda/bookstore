@@ -42,7 +42,7 @@ public class BookTests {
         books.add(new Book());
 
         BookRepository bookRepository = new FakeBookRepository();
-
+        bookRepository.addAll(books);
 
         Catalog catalog = new Catalog(bookRepository);
 
